@@ -1,0 +1,7 @@
+use,default
+exec,main
+
+main,=,function
+attr,default,print
+call,tmp,"Hello, world!"
+end
