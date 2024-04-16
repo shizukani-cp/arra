@@ -1,8 +1,0 @@
-default,=,module,"default"
-
-main,=,function
-attr,default,print
-call,tmp,"Hello, world!"
-end
-
-await,main

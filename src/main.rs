@@ -3,11 +3,12 @@ use std::fs::File;
 use std::io::prelude::*;
 
 fn generate_code(filename:&String) -> Vec<Vec<String>> {
-    let mut f = File::open(filename).expect("file not found");
-
+    let mut f = File::open(filename)
+        .expect("file not found");
     let mut contents = String::new();
     f.read_to_string(&mut contents)
         .expect("something went wrong reading the file");
+    
     let mut code = vec![];
     for str_row in contents.as_str().split("\n"){
         let mut code_row = vec![];
@@ -26,7 +27,7 @@ fn generate_code(filename:&String) -> Vec<Vec<String>> {
                 } else {
                     cell_code += &(",".to_string().to_owned() + &code.lines().collect::<String>());
                 }
-                println!("{}", cell_code);
+                //println!("{}", cell_code);
                 //println!("\"\\\"\" num is {}", vec!(cell_code.chars().filter(|&s| s.to_string() == "\"".to_string())).len() + 1);
                 //println!("{:?}", code);
                 let mut back_slash_num = 0;
@@ -52,7 +53,7 @@ fn generate_code(filename:&String) -> Vec<Vec<String>> {
             code.push(code_row);
         }
     }
-    return code;
+    code
 }
 
 fn main() {
