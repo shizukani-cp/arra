@@ -2,15 +2,74 @@ use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 
+pub mod ImdLangTypes {
+
+    pub struct Expression {
+        string_exp:String
+    }
+
+    impl Expression {
+        fn to_literal(&self) {}
+    }
+
+    pub struct Literal {
+        type_:String,
+        value:String
+    }
+
+    pub struct Var {
+        varname:String,
+        value:Literal
+    }
+
+    pub struct Calling {
+        func:Expression,
+        args:Vec<Expression>
+    }
+
+    pub struct Case {
+        condition:Expression,
+        block:Box<Vec<ImdLangType>>
+    }
+
+    pub struct SwitchStatement {
+        cases:Vec<Case>
+    }
+
+    pub struct WhileStatement {
+        condition:Expression,
+        block:Box<Vec<ImdLangType>>
+    }
+
+    pub struct SubstitutionStatement {
+        var:Var,
+        right_hand_side:Expression
+    }
+
+    pub enum ImdLangType {
+        Call(Calling),
+        Switch(SwitchStatement),
+        While(WhileStatement),
+        Substitution(SubstitutionStatement)
+    }
+}
+
 fn generate_code(filename:&String) -> Vec<Vec<String>> {
+    str_code_to_vec(read_file(filename))
+}
+
+fn read_file(filename:&String) -> String{
     let mut f = File::open(filename)
         .expect("file not found");
     let mut contents = String::new();
     f.read_to_string(&mut contents)
         .expect("something went wrong reading the file");
-    
+    contents
+}
+
+fn str_code_to_vec(str_code:String) -> Vec<Vec<String>> {
     let mut code = vec![];
-    for str_row in contents.as_str().split("\n"){
+    for str_row in str_code.as_str().split("\n"){
         let mut code_row = vec![];
         let sp: Vec<_> = str_row.split(",").collect();
         let mut cells = sp.iter().peekable();
