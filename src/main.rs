@@ -4,12 +4,33 @@ use std::io::prelude::*;
 
 pub mod ImdLangTypes {
 
+    enum Symbols {
+        Add,
+        Sub,
+        Mul,
+        Div,
+        Mod,
+        Pow
+    }
+
+    pub enum SymbolAndValues {
+        Lit(Literal)
+        Variable(Var),
+        Simbol(Symbols)
+    }
+
     pub struct Expression {
-        string_exp:String
+        symbol_and_values:Vec<SymbolAndValues>
     }
 
     impl Expression {
-        fn to_literal(&self) {}
+        fn to_literal(&self) -> Literal {
+            panic!("this method is not implemented.");
+            Literal {
+                type_:"Error".to_string(),
+                value:"Error".to_string()
+            }
+        }
     }
 
     pub struct Literal {
