@@ -4,17 +4,22 @@ use std::io::prelude::*;
 
 pub mod ImdLangTypes {
 
-    enum Symbols {
+    use std::fmt;
+
+    #[derive(Debug)]
+    pub enum Symbols {
         Add,
         Sub,
         Mul,
         Div,
         Mod,
-        Pow
+        Pow,
+        Equal
     }
 
+    #[derive(Debug)]
     pub enum SymbolAndValues {
-        Lit(Literal)
+        Lit(Literal),
         Variable(Var),
         Simbol(Symbols)
     }
@@ -33,9 +38,26 @@ pub mod ImdLangTypes {
         }
     }
 
+    impl fmt::Debug for Expression {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("Expression")
+                .field("symbol_and_values", &self.symbol_and_values)
+                .finish()
+        }
+    }
+
     pub struct Literal {
         type_:String,
         value:String
+    }
+
+    impl fmt::Debug for Literal {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("Literal")
+                .field("type_", &self.type_)
+                .field("value", &self.value)
+                .finish()
+        }
     }
 
     pub struct Var {
@@ -43,9 +65,27 @@ pub mod ImdLangTypes {
         value:Literal
     }
 
+    impl fmt::Debug for Var {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("Var")
+                .field("varname", &self.varname)
+                .field("value", &self.value)
+                .finish()
+        }
+    }
+
     pub struct Calling {
         func:Expression,
         args:Vec<Expression>
+    }
+
+    impl fmt::Debug for Calling {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("Calling")
+                .field("func", &self.func)
+                .field("args", &self.args)
+                .finish()
+        }
     }
 
     pub struct Case {
@@ -53,13 +93,37 @@ pub mod ImdLangTypes {
         block:Box<Vec<ImdLangType>>
     }
 
+    impl fmt::Debug for Case {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("Case")
+                .field("condtion", &self.condition)
+                .field("block", &self.block)
+                .finish()
+        }
+    }
+
     pub struct SwitchStatement {
         cases:Vec<Case>
     }
 
-    pub struct WhileStatement {
-        condition:Expression,
+    impl fmt::Debug for SwitchStatement {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("SwitchStatement")
+                .field("cases", &self.cases)
+                .finish()
+        }
+    }
+
+    pub struct LoopStatement {
         block:Box<Vec<ImdLangType>>
+    }
+
+    impl fmt::Debug for LoopStatement {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("LoopStatement")
+                .field("block", &self.block)
+                .finish()
+        }
     }
 
     pub struct SubstitutionStatement {
@@ -67,16 +131,43 @@ pub mod ImdLangTypes {
         right_hand_side:Expression
     }
 
+    impl fmt::Debug for SubstitutionStatement {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("SubstitutionStatement")
+                .field("var", &self.var)
+                .field("right_hand_side", &self.right_hand_side)
+                .finish()
+        }
+    }
+
+    pub struct InstanceExpression {
+        type_:String,
+        args:Vec<Expression>
+    }
+
+    impl fmt::Debug for InstanceExpression {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.debug_struct("InstanceExpression")
+                .field("type_", &self.type_)
+                .field("args", &self.args)
+                .finish()
+        }
+    }
+
+    #[derive(Debug)]
     pub enum ImdLangType {
         Call(Calling),
         Switch(SwitchStatement),
-        While(WhileStatement),
-        Substitution(SubstitutionStatement)
+        Loop(LoopStatement),
+        Substitution(SubstitutionStatement),
+        Instance(InstanceExpression),
+        Tmp
     }
 }
 
-fn generate_code(filename:&String) -> Vec<Vec<String>> {
-    str_code_to_vec(read_file(filename))
+fn generate_code(filename:&String) -> Vec<ImdLangTypes::ImdLangType> {
+    let vec_code = str_code_to_vec(read_file(filename));
+    vec_code_to_imd_lang(vec_code)
 }
 
 fn read_file(filename:&String) -> String{
@@ -134,6 +225,11 @@ fn str_code_to_vec(str_code:String) -> Vec<Vec<String>> {
         }
     }
     code
+}
+
+fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> Vec<ImdLangTypes::ImdLangType> {
+    //panic!("this method is not implemented.");
+    vec![ImdLangTypes::ImdLangType::Tmp]
 }
 
 fn main() {
