@@ -167,6 +167,7 @@ pub mod ImdLangTypes {
 
 fn generate_code(filename:&String) -> Vec<ImdLangTypes::ImdLangType> {
     let vec_code = str_code_to_vec(read_file(filename));
+    println!("{:?}", vec_code);
     vec_code_to_imd_lang(vec_code)
 }
 
@@ -198,9 +199,14 @@ fn str_code_to_vec(str_code:String) -> Vec<Vec<String>> {
                 } else {
                     cell_code += &(",".to_string().to_owned() + &code.lines().collect::<String>());
                 }
-                //println!("{}", cell_code);
-                //println!("\"\\\"\" num is {}", vec!(cell_code.chars().filter(|&s| s.to_string() == "\"".to_string())).len() + 1);
-                //println!("{:?}", code);
+                if cell_code.chars().next() == None {
+                    break;
+                }
+                //println!("{}", cell_code.chars().next().unwrap());
+                //println!("{:?}", cell_code.chars());
+                if cell_code.chars().next().unwrap() == '#' {
+                    cell_code = "".to_string();
+                }
                 let mut back_slash_num = 0;
                 for s in cell_code.chars() {
                     if s.to_string() == "\"".to_string(){
