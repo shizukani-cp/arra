@@ -24,6 +24,7 @@ pub mod ImdLangTypes {
         Simbol(Symbols)
     }
 
+    #[derive(Debug)]
     pub struct Expression {
         symbol_and_values:Vec<SymbolAndValues>
     }
@@ -38,120 +39,56 @@ pub mod ImdLangTypes {
         }
     }
 
-    impl fmt::Debug for Expression {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("Expression")
-                .field("symbol_and_values", &self.symbol_and_values)
-                .finish()
-        }
-    }
-
+    #[derive(Debug)]
     pub struct Literal {
         type_:String,
         value:String
     }
 
-    impl fmt::Debug for Literal {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("Literal")
-                .field("type_", &self.type_)
-                .field("value", &self.value)
-                .finish()
-        }
+    #[derive(Debug)]
+    pub enum HasLiteralAndEmpty {
+        Empty,
+        Lit(Literal)
     }
 
+    #[derive(Debug)]
     pub struct Var {
         varname:String,
-        value:Literal
+        value:HasLiteralAndEmpty
     }
 
-    impl fmt::Debug for Var {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("Var")
-                .field("varname", &self.varname)
-                .field("value", &self.value)
-                .finish()
-        }
-    }
-
+    #[derive(Debug)]
     pub struct Calling {
         func:Expression,
         args:Vec<Expression>
     }
 
-    impl fmt::Debug for Calling {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("Calling")
-                .field("func", &self.func)
-                .field("args", &self.args)
-                .finish()
-        }
-    }
-
+    #[derive(Debug)]
     pub struct Case {
         condition:Expression,
         block:Box<Vec<ImdLangType>>
     }
 
-    impl fmt::Debug for Case {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("Case")
-                .field("condtion", &self.condition)
-                .field("block", &self.block)
-                .finish()
-        }
-    }
-
+    #[derive(Debug)]
     pub struct SwitchStatement {
         cases:Vec<Case>
     }
 
-    impl fmt::Debug for SwitchStatement {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("SwitchStatement")
-                .field("cases", &self.cases)
-                .finish()
-        }
-    }
-
+    #[derive(Debug)]
     pub struct LoopStatement {
         block:Box<Vec<ImdLangType>>
     }
 
-    impl fmt::Debug for LoopStatement {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("LoopStatement")
-                .field("block", &self.block)
-                .finish()
-        }
-    }
-
+    #[derive(Debug)]
     pub struct SubstitutionStatement {
         var:Var,
         right_hand_side:Expression
     }
 
-    impl fmt::Debug for SubstitutionStatement {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("SubstitutionStatement")
-                .field("var", &self.var)
-                .field("right_hand_side", &self.right_hand_side)
-                .finish()
-        }
-    }
-
+    #[derive(Debug)]
     pub struct InstanceExpression {
         type_:String,
         args:Vec<Expression>
-    }
-
-    impl fmt::Debug for InstanceExpression {
-        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-            f.debug_struct("InstanceExpression")
-                .field("type_", &self.type_)
-                .field("args", &self.args)
-                .finish()
-        }
     }
 
     #[derive(Debug)]
@@ -161,6 +98,7 @@ pub mod ImdLangTypes {
         Loop(LoopStatement),
         Substitution(SubstitutionStatement),
         Instance(InstanceExpression),
+        Empty,
         Tmp
     }
 }
