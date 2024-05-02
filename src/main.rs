@@ -58,47 +58,31 @@ pub mod ImdLangTypes {
     }
 
     #[derive(Debug)]
-    pub struct Calling {
-        func:Expression,
-        args:Vec<Expression>
-    }
-
-    #[derive(Debug)]
     pub struct Case {
         condition:Expression,
         block:Box<Vec<ImdLangType>>
     }
 
     #[derive(Debug)]
-    pub struct SwitchStatement {
-        cases:Vec<Case>
-    }
-
-    #[derive(Debug)]
-    pub struct LoopStatement {
-        block:Box<Vec<ImdLangType>>
-    }
-
-    #[derive(Debug)]
-    pub struct SubstitutionStatement {
-        var:Var,
-        right_hand_side:Expression
-    }
-
-    #[derive(Debug)]
-    pub struct InstanceExpression {
-        type_:String,
-        args:Vec<Expression>
-    }
-
-    #[derive(Debug)]
     pub enum ImdLangType {
-        Call(Calling),
-        Switch(SwitchStatement),
-        Loop(LoopStatement),
-        Substitution(SubstitutionStatement),
-        Instance(InstanceExpression),
-        Empty,
+        Call{
+            func:Expression,
+            args:Vec<Expression>
+        },
+        Switch {
+            cases:Vec<Case>
+        },
+        Loop {
+            block:Box<Vec<ImdLangType>>
+        },
+        Substitution {
+            var:Var,
+            right_hand_side:Expression
+        },
+        Instance {
+            type_:String,
+            args:Vec<Expression>
+        },
         Tmp
     }
 }
