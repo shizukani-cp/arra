@@ -6,6 +6,8 @@ pub mod ImdLangTypes {
 
     use std::fmt;
 
+    pub type Statements = Vec<Statement>;
+
     #[derive(Debug)]
     pub enum Symbols {
         Add,
@@ -60,11 +62,11 @@ pub mod ImdLangTypes {
     #[derive(Debug)]
     pub struct Case {
         condition:Expression,
-        block:Box<Vec<ImdLangType>>
+        block:Box<Statements>
     }
 
     #[derive(Debug)]
-    pub enum ImdLangType {
+    pub enum Statement {
         Call{
             func:Expression,
             args:Vec<Expression>
@@ -73,7 +75,7 @@ pub mod ImdLangTypes {
             cases:Vec<Case>
         },
         Loop {
-            block:Box<Vec<ImdLangType>>
+            block:Box<Statements>
         },
         Substitution {
             var:Var,
@@ -87,7 +89,7 @@ pub mod ImdLangTypes {
     }
 }
 
-fn generate_code(filename:&String) -> Vec<ImdLangTypes::ImdLangType> {
+fn generate_code(filename:&String) -> ImdLangTypes::Statements {
     let vec_code = str_code_to_vec(read_file(filename));
     println!("{:?}", vec_code);
     vec_code_to_imd_lang(vec_code)
@@ -155,9 +157,9 @@ fn str_code_to_vec(str_code:String) -> Vec<Vec<String>> {
     code
 }
 
-fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> Vec<ImdLangTypes::ImdLangType> {
+fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> ImdLangTypes::Statements {
     //panic!("this method is not implemented.");
-    vec![ImdLangTypes::ImdLangType::Tmp]
+    vec![ImdLangTypes::Statement::Tmp]
 }
 
 fn main() {
