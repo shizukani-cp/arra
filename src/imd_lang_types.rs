@@ -79,6 +79,6 @@ pub mod ImdLangTypes {
             type_:String,
             args:Vec<Expression>
         },
-        Tmp
+        NotImplement
     }
 }

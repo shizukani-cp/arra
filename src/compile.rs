@@ -74,6 +74,6 @@ pub mod compiler{
 
     pub fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> ImdLangTypes::Statements {
         //panic!("this method is not implemented.");
-        vec![ImdLangTypes::Statement::Tmp]
+        vec![ImdLangTypes::Statement::NotImplement]
     }
 }
