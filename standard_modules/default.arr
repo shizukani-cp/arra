@@ -1,6 +1,6 @@
-str,=,struct
+String,=,struct
     #body,
 end
-int,=,struct
+Int,=,struct
     #body,
 end
