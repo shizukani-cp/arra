@@ -1,25 +1,24 @@
-Byte,=,struct
-   ,0,null
-   ,1,null
-   ,2,null
-   ,3,null
-   ,4,null
-   ,5,null
-   ,6,null
-   ,7,null
+Byte,=,namespace
+   ,new,=,function,zero,one,two,three,four,five,six,seven
+   ,end
 end
 
-List,=,struct
+List,=,namespace
+   ,new,=,function,arg
+   ,end
 end
 
-Char,=,struct
-   ,UnicodeBytes,[]
+Char,=,namespace
+   ,new,=,function,unicode_bytes
+   ,end
 end
 
-String,=,struct
-   ,Chars,[]
+String,=,namespace
+   ,new,=,function,chars
+   ,end
 end
 
-Int,=,struct
-   ,Bytes,[]
+Int,=,namespace
+   ,new,=,function,x
+   ,end
 end
