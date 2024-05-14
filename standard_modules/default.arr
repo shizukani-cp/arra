@@ -22,3 +22,8 @@ Int,=,namespace
    ,new,=,function,x
    ,end
 end
+
+RationalNumber,=,namespace
+   ,new,=,function,numerator,denominator
+   ,end
+end
