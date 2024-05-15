@@ -1,7 +1,16 @@
 Byte,=,namespace
-   ,new,=,function,zero,one,two,three,four,five,six,seven
-   ,self,=,empty
-   ,return,self
+   ,new,=,function,on,tw,th,fo,fi,si,se,ei
+       ,self,=,empty
+       ,attr,self,one,=,on
+       ,attr,self,two,=,tw
+       ,attr,self,three,=,th
+       ,attr,self,four,=,fo
+       ,attr,self,five,=,fi
+       ,attr,self,six,=,si
+       ,attr,self,six,=,si
+       ,attr,self,seven,=,se
+       ,attr,self,eight,=,ei
+       ,return,self
    ,end
 end
 
