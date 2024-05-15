@@ -17,7 +17,12 @@ pub mod ImdLangTypes {
     pub enum SymbolAndValues {
         Lit(Literal),
         Variable(Var),
-        Simbol(Symbols)
+        Simbol(Symbols),
+        Attr(Vec<String>)
+        Ref{
+            object:Expression,
+            index:Expression
+        }
     }
 
     #[derive(Debug)]
