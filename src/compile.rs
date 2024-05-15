@@ -25,7 +25,7 @@ pub mod compiler{
             let mut code_row = vec![];
             let sp: Vec<_> = str_row.split(",").collect();
             let mut cells = sp.iter().peekable();
-            loop{
+            'row: loop{
                 let mut cell_code = "".to_string();
                 let mut in_str = false;
                 loop{
@@ -44,7 +44,7 @@ pub mod compiler{
                     //println!("{}", cell_code.chars().next().unwrap());
                     //println!("{:?}", cell_code.chars());
                     if cell_code.chars().next().unwrap() == '#' {
-                        cell_code = "".to_string();
+                        continue 'row;
                     }
                     let mut back_slash_num = 0;
                     for s in cell_code.chars() {
