@@ -74,11 +74,7 @@ pub mod ImdLangTypes {
         Substitution {
             var:Var,
             right_hand_side:Expression
-        },
-        Instance {
-            type_:String,
-            args:Vec<Expression>
-        },
+        }
         NotImplement
     }
 }
