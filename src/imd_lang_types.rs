@@ -27,7 +27,7 @@ pub mod ImdLangTypes {
 
     impl Expression {
         fn to_literal(&self) -> Literal {
-            panic!("this method is not implemented.");
+            unimplemented!();
             Literal {
                 type_:"Error".to_string(),
                 value:"Error".to_string()
