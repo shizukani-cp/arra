@@ -1,3 +1,10 @@
+Boolean,=,namespace
+   ,new,=,function,x
+   ,attr,x,bool,to_bool
+   ,return,call,ref,tmp,1
+   ,end
+end
+
 Byte,=,namespace
    ,new,=,function,on,tw,th,fo,fi,si,se,ei
        ,self,=,empty
