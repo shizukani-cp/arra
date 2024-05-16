@@ -79,6 +79,9 @@ pub mod ImdLangTypes {
         Substitution {
             var:Var,
             right_hand_side:Expression
+        },
+        NameSpace {
+            block:Box<Statements>
         }
         NotImplement
     }
