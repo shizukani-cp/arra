@@ -18,7 +18,7 @@ pub mod ImdLangTypes {
         Lit(Literal),
         Variable(Var),
         Simbol(Symbols),
-        Attr(Vec<String>)
+        Attr(Vec<String>),
         Ref{
             object:Expression,
             index:Expression
@@ -82,7 +82,7 @@ pub mod ImdLangTypes {
         },
         NameSpace {
             block:Box<Statements>
-        }
+        },
         NotImplement
     }
 }
