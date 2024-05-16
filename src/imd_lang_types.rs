@@ -17,7 +17,12 @@ pub mod ImdLangTypes {
     pub enum SymbolAndValues {
         Lit(Literal),
         Variable(Var),
-        Simbol(Symbols)
+        Simbol(Symbols),
+        Attr(Vec<String>)
+        Ref{
+            object:Expression,
+            index:Expression
+        }
     }
 
     #[derive(Debug)]
@@ -27,7 +32,7 @@ pub mod ImdLangTypes {
 
     impl Expression {
         fn to_literal(&self) -> Literal {
-            panic!("this method is not implemented.");
+            unimplemented!();
             Literal {
                 type_:"Error".to_string(),
                 value:"Error".to_string()
@@ -75,10 +80,9 @@ pub mod ImdLangTypes {
             var:Var,
             right_hand_side:Expression
         },
-        Instance {
-            type_:String,
-            args:Vec<Expression>
-        },
+        NameSpace {
+            block:Box<Statements>
+        }
         NotImplement
     }
 }
