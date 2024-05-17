@@ -23,6 +23,19 @@ end
 
 List,=,namespace
    ,new,=,function,arg
+       ,tmpL,=,empty
+       ,index,=,0
+       ,next_func,=,attr,arg,next
+       ,loop
+           ,ref,tmpL,index,=,call,next_func
+           ,index,+=,1
+           ,switch
+               case,index,==,attr,arg,len
+                   ,break
+               ,end
+           ,end
+       ,end
+       ,return,tmpL
    ,end
 end
 
