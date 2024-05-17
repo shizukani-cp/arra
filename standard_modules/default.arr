@@ -58,6 +58,8 @@ end
 Int,=,namespace
    ,new,=,function,x
    ,self,=,empty
+   ,to_int_func,=,attr,x,to_int
+   ,attr,self,val,=,call,to_int_func
    ,return,self
    ,end
 end
