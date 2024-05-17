@@ -42,6 +42,7 @@ end
 Char,=,namespace
    ,new,=,function,unicode_bytes
    ,self,=,empty
+   ,attr,self,codes,=,unicode_bytes
    ,return,self
    ,end
 end
@@ -49,6 +50,7 @@ end
 String,=,namespace
    ,new,=,function,chars
    ,self,=,empty
+   ,attr,self,chars,=,chars
    ,return,self
    ,end
 end
