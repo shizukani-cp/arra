@@ -67,6 +67,8 @@ end
 RationalNumber,=,namespace
    ,new,=,function,numerator,denominator
    ,self,=,empty
+   ,attr,self,nume,=,numerator
+   ,attr,self,deno,=,denominator
    ,return,self
    ,end
 end
