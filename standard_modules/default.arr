@@ -30,7 +30,7 @@ List,=,namespace
            ,ref,tmpL,index,=,call,next_func
            ,index,+=,1
            ,switch
-               case,index,==,attr,arg,len
+               ,case,index,==,attr,arg,len
                    ,break
                ,end
            ,end
