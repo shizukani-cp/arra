@@ -1,7 +1,7 @@
 Boolean,=,namespace
    ,new,=,function,x
-   ,attr,x,bool,to_bool
-   ,return,call,ref,tmp,1
+       ,attr,x,bool,to_bool
+       ,return,call,ref,tmp,1
    ,end
 end
 
@@ -41,34 +41,34 @@ end
 
 Char,=,namespace
    ,new,=,function,unicode_bytes
-   ,self,=,empty
-   ,attr,self,codes,=,unicode_bytes
-   ,return,self
+       ,self,=,empty
+       ,attr,self,codes,=,unicode_bytes
+       ,return,self
    ,end
 end
 
 String,=,namespace
    ,new,=,function,chars
-   ,self,=,empty
-   ,attr,self,chars,=,chars
-   ,return,self
+       ,self,=,empty
+       ,attr,self,chars,=,chars
+       ,return,self
    ,end
 end
 
 Int,=,namespace
    ,new,=,function,x
-   ,self,=,empty
-   ,to_int_func,=,attr,x,to_int
-   ,attr,self,val,=,call,to_int_func
-   ,return,self
+       ,self,=,empty
+       ,to_int_func,=,attr,x,to_int
+       ,attr,self,val,=,call,to_int_func
+       ,return,self
    ,end
 end
 
 RationalNumber,=,namespace
    ,new,=,function,numerator,denominator
-   ,self,=,empty
-   ,attr,self,nume,=,numerator
-   ,attr,self,deno,=,denominator
-   ,return,self
+       ,self,=,empty
+       ,attr,self,nume,=,numerator
+       ,attr,self,deno,=,denominator
+       ,return,self
    ,end
 end
