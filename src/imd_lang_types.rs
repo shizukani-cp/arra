@@ -19,7 +19,7 @@ pub mod imd_lang_types {
         Variable(Var),
         Simbol(Symbols),
         Attr(Vec<String>),
-        Ref{
+        Ref {
             object:Expression,
             index:Expression
         }
