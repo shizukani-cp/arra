@@ -10,7 +10,12 @@ pub mod imd_lang_types {
         Div,
         Mod,
         Pow,
-        Equal
+        Equal,
+        NotEqual,
+        Big,
+        Small,
+        EqualOrSmall,
+        EqualOrBig
     }
 
     #[derive(Debug)]
