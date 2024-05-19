@@ -22,6 +22,10 @@ pub mod imd_lang_types {
         Ref {
             object:Expression,
             index:Expression
+        },
+        Call {
+            func:Expression,
+            args:Vec<Expression>
         }
     }
 
