@@ -83,6 +83,9 @@ pub mod ImdLangTypes {
         NameSpace {
             block:Box<Statements>
         },
+        Return(Expression),
+        Break,
+        Continue,
         NotImplement
     }
 }
