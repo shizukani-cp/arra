@@ -1,5 +1,5 @@
 mod imd_lang_types;
-use imd_lang_types::ImdLangTypes;
+use imd_lang_types::imd_lang_types;
 
 mod compile;
 use compile::compiler;

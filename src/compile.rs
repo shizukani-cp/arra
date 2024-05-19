@@ -2,9 +2,9 @@ pub mod compiler{
     use std::fs::File;
     use std::io::prelude::*;
 
-    use crate::imd_lang_types::ImdLangTypes;
+    use crate::imd_lang_types::imd_lang_types;
     
-    pub fn generate_code(filename:&String) -> ImdLangTypes::Statements {
+    pub fn generate_code(filename:&String) -> imd_lang_types::Statements {
         let vec_code = str_code_to_vec(read_file(filename));
         println!("{:?}", vec_code);
         vec_code_to_imd_lang(vec_code)
@@ -72,8 +72,8 @@ pub mod compiler{
         code
     }
 
-    pub fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> ImdLangTypes::Statements {
+    pub fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> imd_lang_types::Statements {
         unimplemented!();
-        vec![ImdLangTypes::Statement::NotImplement]
+        vec![imd_lang_types::Statement::NotImplement]
     }
 }

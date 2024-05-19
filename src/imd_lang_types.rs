@@ -1,4 +1,4 @@
-pub mod ImdLangTypes {
+pub mod imd_lang_types {
 
     pub type Statements = Vec<Statement>;
 
