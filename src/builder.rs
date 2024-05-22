@@ -1,4 +1,4 @@
-pub mod compiler{
+pub mod builder{
     use std::fs::File;
     use std::io::prelude::*;
 

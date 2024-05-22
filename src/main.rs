@@ -1,14 +1,14 @@
 mod imd_lang_types;
-mod compile;
-use compile::compiler;
+mod builder;
+use crate::builder::builder::generate_code;
 
 use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args[1] == "compile".to_string(){
+    if args[1] == "build".to_string(){
         let filename = &args[2];
-        println!("{:?}", compiler::generate_code(&filename));
+        println!("{:?}", generate_code(&filename));
     } else if args[1] == "run".to_string(){
 
     } else {
