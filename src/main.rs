@@ -10,7 +10,7 @@ fn main() {
         let filename = &args[2];
         println!("{:?}", generate_code(&filename));
     } else if args[1] == "run".to_string(){
-
+        unimplemented!()
     } else {
         panic!("Sub command not found.");
     }
