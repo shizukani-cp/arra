@@ -1,3 +1,21 @@
+ops,=,function,
+   ,self,=,empty
+   ,f,=,function,self,other
+       ,return,NotImplemented
+   ,end
+   ,attr,self,ad,=,f
+   ,attr,self,sb,=,f
+   ,attr,self,ml,=,f
+   ,attr,self,dv,=,f
+   ,attr,self,eq,=,f
+   ,attr,self,ne,=,f
+   ,attr,self,lt,=,f
+   ,attr,self,le,=,f
+   ,attr,self,gt,=,f
+   ,attr,self,ge,=,f
+   ,return,self,
+end
+
 Boolean,=,namespace
    ,new,=,function,x
        ,attr,x,bool,to_bool
