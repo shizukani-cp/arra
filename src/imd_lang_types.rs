@@ -18,6 +18,25 @@ pub mod imd_lang_types {
         EqualOrBig
     }
 
+    impl Symbols {
+        fn to_op_func_name(&self) -> String {
+            match self {
+                Symbols::Add => "ad",
+                Symbols::Sub => "sb",
+                Symbols::Mul => "ml",
+                Symbols::Div => "dv",
+                Symbols::Mod => "md",
+                Symbols::Pow => "pw",
+                Symbols::Equal => "eq",
+                Symbols::NotEqual => "ne",
+                Symbols::Big => "gt",
+                Symbols::Small => "lt",
+                Symbols::EqualOrSmall => "le",
+                Symbols::EqualOrBig => "ge"
+            }
+        }
+    }
+
     #[derive(Debug)]
     pub enum SymbolAndValues {
         Lit(Literal),
