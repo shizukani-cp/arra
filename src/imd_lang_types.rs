@@ -1,4 +1,4 @@
-pub mod ImdLangTypes {
+pub mod imd_lang_types {
 
     pub type Statements = Vec<Statement>;
 
@@ -10,7 +10,31 @@ pub mod ImdLangTypes {
         Div,
         Mod,
         Pow,
-        Equal
+        Equal,
+        NotEqual,
+        Big,
+        Small,
+        EqualOrSmall,
+        EqualOrBig
+    }
+
+    impl Symbols {
+        fn to_op_func_name(&self) -> String {
+            match self {
+                Symbols::Add => "ad",
+                Symbols::Sub => "sb",
+                Symbols::Mul => "ml",
+                Symbols::Div => "dv",
+                Symbols::Mod => "md",
+                Symbols::Pow => "pw",
+                Symbols::Equal => "eq",
+                Symbols::NotEqual => "ne",
+                Symbols::Big => "gt",
+                Symbols::Small => "lt",
+                Symbols::EqualOrSmall => "le",
+                Symbols::EqualOrBig => "ge"
+            }
+        }
     }
 
     #[derive(Debug)]
@@ -19,9 +43,13 @@ pub mod ImdLangTypes {
         Variable(Var),
         Simbol(Symbols),
         Attr(Vec<String>),
-        Ref{
+        Ref {
             object:Expression,
             index:Expression
+        },
+        Call {
+            func:Expression,
+            args:Vec<Expression>
         }
     }
 
@@ -83,6 +111,9 @@ pub mod ImdLangTypes {
         NameSpace {
             block:Box<Statements>
         },
+        Return(Expression),
+        Break,
+        Continue,
         NotImplement
     }
 }
