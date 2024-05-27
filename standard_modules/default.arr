@@ -7,6 +7,7 @@ ops,=,function,
    ,attr,self,sb,=,f
    ,attr,self,ml,=,f
    ,attr,self,dv,=,f
+   ,attr,self,pw,=,f
    ,attr,self,eq,=,f
    ,attr,self,ne,=,f
    ,attr,self,lt,=,f  ,#Low
