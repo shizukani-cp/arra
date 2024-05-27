@@ -9,10 +9,10 @@ ops,=,function,
    ,attr,self,dv,=,f
    ,attr,self,eq,=,f
    ,attr,self,ne,=,f
-   ,attr,self,lt,=,f
-   ,attr,self,le,=,f
-   ,attr,self,gt,=,f
-   ,attr,self,ge,=,f
+   ,attr,self,lt,=,f  ,#Low
+   ,attr,self,le,=,f  ,#LowOrEqual
+   ,attr,self,gt,=,f  ,#Big
+   ,attr,self,ge,=,f  ,#BigOrEqual
    ,return,self,
 end
 
