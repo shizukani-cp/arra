@@ -33,7 +33,7 @@ pub mod imd_lang_types {
                 Symbols::Small => "lt",
                 Symbols::EqualOrSmall => "le",
                 Symbols::EqualOrBig => "ge"
-            }
+            }.to_string()
         }
     }
 
