@@ -56,7 +56,7 @@ pub mod imd_lang_types {
 
     #[derive(Debug)]
     pub struct Expression {
-        symbol_and_values:Vec<SymbolAndValues>
+        pub symbol_and_values:Vec<SymbolAndValues>
     }
 
     impl Expression {
@@ -71,8 +71,8 @@ pub mod imd_lang_types {
 
     #[derive(Debug)]
     pub struct Literal {
-        type_:String,
-        value:String
+        pub type_:String,
+        pub value:String
     }
 
     #[derive(Debug)]
@@ -83,14 +83,14 @@ pub mod imd_lang_types {
 
     #[derive(Debug)]
     pub struct Var {
-        varname:String,
-        value:HasLiteralAndEmpty
+        pub varname:String,
+        pub value:HasLiteralAndEmpty
     }
 
     #[derive(Debug)]
     pub struct Case {
-        condition:Expression,
-        block:Box<Statements>
+        pub condition:Expression,
+        pub block:Box<Statements>
     }
 
     #[derive(Debug)]
