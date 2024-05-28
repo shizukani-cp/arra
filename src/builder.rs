@@ -74,6 +74,27 @@ pub mod builder{
 
     pub fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> imd_lang_types::Statements {
         unimplemented!();
+        let imd_lang_code:imd_lang_types::Statements = vec![];
+        let iter_code = veccode.iter();
+        loop {
+            let row = iter_code.next().unwrap();
+            if row[1] == "=".to_string() {
+                imd_lang_code.push(imd_lang_types::Statement::Substitution{
+                    var: imd_lang_types::Var {
+                        varname: row[0],
+                        value: imd_lang_types::HasLiteralAndEmpty::Empty
+                    },
+                    right_hand_side: parse_expression((&row[2..]).to_vec())
+                });
+            }
+        }
         vec![imd_lang_types::Statement::NotImplement]
+    }
+
+    fn parse_expression(vec_expression: Vec<String>) -> imd_lang_types::Expression {
+        unimplemented!();
+        imd_lang_types::Expression {
+            symbol_and_values: vec![imd_lang_types::SymbolAndValues::NotImplement]
+        }
     }
 }

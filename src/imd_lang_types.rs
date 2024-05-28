@@ -50,7 +50,8 @@ pub mod imd_lang_types {
         Call {
             func:Expression,
             args:Vec<Expression>
-        }
+        },
+        NotImplement
     }
 
     #[derive(Debug)]
