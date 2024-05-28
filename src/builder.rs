@@ -86,6 +86,8 @@ pub mod builder{
                     },
                     right_hand_side: parse_expression((&row[2..]).to_vec())
                 });
+            } else {
+                panic!("Invaild syntax.");
             }
         }
         vec![imd_lang_types::Statement::NotImplement]
