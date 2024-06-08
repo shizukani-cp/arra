@@ -95,7 +95,7 @@ pub mod builder{
                 panic!("Invaild syntax.");
             }
         }
-        vec![imd_lang_types::Statement::NotImplement]
+        imd_lang_code
     }
 
     fn parse_expression(vec_expression: Vec<String>) -> imd_lang_types::Expression {
