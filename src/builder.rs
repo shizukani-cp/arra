@@ -85,12 +85,21 @@ pub mod builder{
             let row = tmp;
             if row[1] == "=".to_string() {
                 imd_lang_code.push(imd_lang_types::Statement::Substitution{
-                    var: imd_lang_types::Var {
+                    left_hand_side: imd_lang_types::VarOrAttr::Var {
                         varname: row[0],
                         value: imd_lang_types::HasLiteralAndEmpty::Empty
                     },
                     right_hand_side: parse_expression((&row[2..]).to_vec())
                 });
+            } else if row[0] == "attr".to_string() {
+                if row.contains(&("=".to_string())) {
+                    if let Some(index) = row.iter().position(|s| *s == "=".to_string()) {
+                        imd_lang_code.push(imd_lang_types::Statement::Substitution {
+                            left_hand_side: imd_lang_types::VarOrAttr::Attr((&row[..index]).to_vec()),
+                            right_hand_side: parse_expression((&row[(index + 2)..]).to_vec())
+                        })
+                    }
+                }
             } else {
                 panic!("Invaild syntax.");
             }

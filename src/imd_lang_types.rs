@@ -40,9 +40,8 @@ pub mod imd_lang_types {
     #[derive(Debug)]
     pub enum SymbolAndValues {
         Lit(Literal),
-        Variable(Var),
+        Variable(VarOrAttr),
         Simbol(Symbols),
-        Attr(Vec<String>),
         Ref {
             object:Expression,
             index:Expression
@@ -82,9 +81,12 @@ pub mod imd_lang_types {
     }
 
     #[derive(Debug)]
-    pub struct Var {
-        pub varname:String,
-        pub value:HasLiteralAndEmpty
+    pub enum VarOrAttr {
+        Var {
+            varname:String,
+            value:HasLiteralAndEmpty
+        },
+        Attr(Vec<String>)
     }
 
     #[derive(Debug)]
@@ -106,7 +108,7 @@ pub mod imd_lang_types {
             block:Box<Statements>
         },
         Substitution {
-            var:Var,
+            left_hand_side:VarOrAttr,
             right_hand_side:Expression
         },
         NameSpace {
