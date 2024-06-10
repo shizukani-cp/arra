@@ -93,6 +93,8 @@ pub mod builder{
                             right_hand_side: parse_expression((&row[(index + 2)..]).to_vec())
                         })
                     }
+                } else {
+                    imd_lang_code.push(imd_lang_types::Statement::AddTmp(parse_expression(*row)))
                 }
             } else {
                 panic!("Invaild syntax.");
