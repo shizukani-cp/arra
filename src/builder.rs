@@ -76,13 +76,7 @@ pub mod builder{
         unimplemented!();
         let imd_lang_code: imd_lang_types::Statements = vec![];
         let iter_code = veccode.iter();
-        loop {
-            let mut tmp;
-            match iter_code.next() {
-                Some(r) => {tmp = r;},
-                None => {break;}
-            }
-            let row = tmp;
+        while let Some(row) = iter_code.next() {
             if row[1] == "=".to_string() {
                 imd_lang_code.push(imd_lang_types::Statement::Substitution{
                     left_hand_side: imd_lang_types::VarOrAttr::Var {
