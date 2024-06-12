@@ -40,7 +40,7 @@ pub mod imd_lang_types {
     #[derive(Debug)]
     pub enum SymbolAndValues {
         Lit(Literal),
-        Variable(VarOrAttr),
+        VarOrAttr(VarOrAttr),
         Simbol(Symbols),
         Ref {
             object:Expression,
