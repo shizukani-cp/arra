@@ -77,7 +77,7 @@ pub mod builder{
         let imd_lang_code: imd_lang_types::Statements = vec![];
         let iter_code = veccode.iter();
         while let Some(row) = iter_code.next() {
-            if row[1] == "=".to_string() {
+            if ref_cell(row, 1) == "=".to_string() {
                 imd_lang_code.push(imd_lang_types::Statement::Substitution{
                     left_hand_side: imd_lang_types::VarOrAttr::Var {
                         varname: row[0],
@@ -85,7 +85,7 @@ pub mod builder{
                     },
                     right_hand_side: parse_expression((&row[2..]).to_vec())
                 });
-            } else if row[0] == "attr".to_string() {
+            } else if ref_cell(row, 0) == "attr".to_string() {
                 if row.contains(&("=".to_string())) {
                     if let Some(index) = row.iter().position(|s| *s == "=".to_string()) {
                         imd_lang_code.push(imd_lang_types::Statement::Substitution {
@@ -101,6 +101,13 @@ pub mod builder{
             }
         }
         imd_lang_code
+    }
+
+    fn ref_cell(row: &Vec<String>, col: usize) -> String{
+        if row.len() <= col {
+            return "".to_string();
+        }
+        row.as_slice()[col].clone()
     }
 
     fn parse_expression(vec_expression: Vec<String>) -> imd_lang_types::Expression {
