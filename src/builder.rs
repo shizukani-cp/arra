@@ -117,3 +117,36 @@ pub mod builder{
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::builder::builder;
+
+    fn testing_str_code_to_vec(s: &str, v: Vec<Vec<&str>>) {
+        let mut vcode: Vec<Vec<String>> = vec![];
+        for r in v {
+            let mut row: Vec<String> = vec![];
+            for c in r {
+                row.push(c.to_string());
+            }
+            vcode.push(row);
+        }
+        assert_eq!(builder::str_code_to_vec(s.to_string()), vcode)
+    }
+
+    #[test]
+    fn test1() {
+        testing_str_code_to_vec(
+            "call,print,\"Hello, World!\"",
+            vec![vec!["call", "print", "\"Hello, World!\""]]
+        )
+    }
+
+    #[test]
+    fn comment_exclusion() {
+        testing_str_code_to_vec(
+            "call,print,\"Hello, World!\", #calling print(printを呼び出し)",
+            vec![vec!["call", "print", "\"Hello, World!\""]]
+        )
+    }
+}
