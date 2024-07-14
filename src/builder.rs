@@ -21,57 +21,47 @@ pub mod builder{
 
     pub fn str_code_to_vec(str_code:String) -> Vec<Vec<String>> {
         let mut code = vec![];
-        for str_row in str_code.as_str().split("\n"){
-            let mut code_row = vec![];
-            let sp: Vec<_> = str_row.split(",").collect();
-            let mut cells = sp.iter().peekable();
-            'row: loop{
-                let mut cell_code = "".to_string();
-                let mut in_str = false;
-                loop{
-                    let code = match cells.next(){
-                        Some(v) => v,
-                        _ => ""
-                    }.replace("\r", "\n");
-                    if !in_str{
-                        cell_code += code.trim();
-                    } else {
-                        cell_code += &(",".to_string().to_owned() + &code.lines().collect::<String>());
-                    }
-                    if cell_code.chars().next() == None {
-                        break;
-                    }
-                    //println!("{}", cell_code.chars().next().unwrap());
-                    //println!("{:?}", cell_code.chars());
-                    if cell_code.chars().next().unwrap() == '#' {
-                        continue 'row;
-                    }
-                    let mut back_slash_num = 0;
-                    for s in cell_code.chars() {
-                        if s.to_string() == "\"".to_string(){
-                            back_slash_num += 1;
+        let mut in_quotes = false;
+        let mut current_string = String::new();
+        let mut row = vec![];
+        for row_s in str_code.split("\n") {
+            for c in row_s.chars() {
+                match c {
+                    '"' => {
+                        in_quotes = !in_quotes;
+                        current_string.push(c);
+                        if !in_quotes && !(current_string.is_empty()) {
+                            row.push(current_string.clone());
+                            current_string.clear();
+                        }
+                    },
+                    ',' => {
+                        if in_quotes {
+                            current_string.push(c);
+                        } else {
+                            if !current_string.is_empty() {
+                                let cell = current_string.clone().trim().to_owned();
+                                row.push(cell);
+                                current_string.clear();
+                            }
                         }
                     }
-                    if back_slash_num % 2 == 0 {
+                    '\r' => {},
+                    '#' => {
                         break;
-                    } else {
-                        in_str = true;
+                    }
+                    _ => {
+                        current_string.push(c)
                     }
                 }
-                if cell_code != ""{
-                    code_row.push(cell_code);
-                }
-                if cells.peek() == None {
-                    break;
-                }
             }
-            if !(code_row.is_empty()){
-                code.push(code_row);
+            if !(row.is_empty()){
+                code.push(row.clone());
             }
+            row.clear();
         }
         code
     }
-
     pub fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> imd_lang_types::Statements {
         unimplemented!();
         let imd_lang_code: imd_lang_types::Statements = vec![];
