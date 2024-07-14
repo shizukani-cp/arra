@@ -38,24 +38,20 @@ pub mod imd_lang_types {
     }
 
     #[derive(Debug)]
-    pub enum SymbolAndValues {
+    pub enum Expression {
         Lit(Literal),
         VarOrAttr(VarOrAttr),
         Simbol(Symbols),
+        Module(String),
         Ref {
-            object:Expression,
-            index:Expression
+            object:Box<Expression>,
+            index:Box<Expression>
         },
         Call {
-            func:Expression,
+            func:Box<Expression>,
             args:Vec<Expression>
         },
         NotImplement
-    }
-
-    #[derive(Debug)]
-    pub struct Expression {
-        pub symbol_and_values:Vec<SymbolAndValues>
     }
 
     impl Expression {
@@ -82,12 +78,15 @@ pub mod imd_lang_types {
 
     #[derive(Debug)]
     pub enum VarOrAttr {
-        Var {
-            varname:String,
-            value:HasLiteralAndEmpty
-        },
+        Variable(Var),
         Attr(Vec<String>)
     }
+
+    #[derive(Debug)]
+    pub struct Var {
+        pub varname:String,
+        pub value:HasLiteralAndEmpty
+    } 
 
     #[derive(Debug)]
     pub struct Case {
@@ -116,6 +115,7 @@ pub mod imd_lang_types {
         },
         AddTmp(Expression),
         Return(Expression),
+        Export(Var),
         Break,
         Continue,
         NotImplement
