@@ -38,11 +38,22 @@ pub mod imd_lang_types {
     }
 
     #[derive(Debug)]
+    pub enum FormulaElements {
+        Synbol(Symbols),
+        Literal(Literal),
+        Variable(Var)
+    }
+
+    #[derive(Debug)]
     pub enum Expression {
         Lit(Literal),
         VarOrAttr(VarOrAttr),
-        Simbol(Symbols),
+        Formula(Vec<FormulaElements>),
         Module(String),
+        Function {
+            args:Vec<Var>,
+            block:Box<Statements>
+        },
         Ref {
             object:Box<Expression>,
             index:Box<Expression>
@@ -54,25 +65,9 @@ pub mod imd_lang_types {
         NotImplement
     }
 
-    impl Expression {
-        fn to_literal(&self) -> Literal {
-            unimplemented!();
-            Literal {
-                type_:"Error".to_string(),
-                value:"Error".to_string()
-            }
-        }
-    }
-
     #[derive(Debug)]
     pub struct Literal {
         pub value:String
-    }
-
-    #[derive(Debug)]
-    pub enum HasLiteralAndEmpty {
-        Empty,
-        Lit(Literal)
     }
 
     #[derive(Debug)]
@@ -84,7 +79,7 @@ pub mod imd_lang_types {
     #[derive(Debug)]
     pub struct Var {
         pub varname:String,
-        pub value:HasLiteralAndEmpty
+        pub value:Literal
     } 
 
     #[derive(Debug)]
