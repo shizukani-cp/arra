@@ -66,7 +66,6 @@ pub mod imd_lang_types {
 
     #[derive(Debug)]
     pub struct Literal {
-        pub type_:String,
         pub value:String
     }
 

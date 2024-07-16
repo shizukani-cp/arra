@@ -71,7 +71,9 @@ pub mod builder{
                 imd_lang_code.push(imd_lang_types::Statement::Substitution{
                     left_hand_side: imd_lang_types::VarOrAttr::Variable(imd_lang_types::Var {
                         varname: row[0],
-                        value: imd_lang_types::HasLiteralAndEmpty::Empty
+                        value: imd_lang_types::Literal {
+                            value:"".to_string()
+                        }
                     }),
                     right_hand_side: parse_expression((&row[2..]).to_vec())
                 });
@@ -103,9 +105,7 @@ pub mod builder{
 
     fn parse_expression(vec_expression: Vec<String>) -> imd_lang_types::Expression {
         unimplemented!();
-        imd_lang_types::Expression {
-            symbol_and_values: vec![imd_lang_types::SymbolAndValues::NotImplement]
-        }
+        imd_lang_types::Expression::NotImplement
     }
 }
 
