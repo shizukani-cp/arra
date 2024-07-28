@@ -105,7 +105,8 @@ pub mod imd_lang_types {
             right_hand_side:Expression
         },
         NameSpace {
-            block:Box<Statements>
+            block:Box<Statements>,
+            super_space:Option<String>
         },
         AddTmp(Expression),
         Return(Expression),
