@@ -1,6 +1,9 @@
 pub mod imd_lang_types {
 
+    use std::collections::HashMap;
+
     pub type Statements = Vec<Statement>;
+    pub type AttrKeyAndValue = HashMap<String, String>;
 
     #[derive(Debug)]
     pub enum Symbols {
@@ -38,11 +41,29 @@ pub mod imd_lang_types {
     }
 
     #[derive(Debug)]
+    pub enum LiteralTypes {
+        Int(isize),
+        Str(String),
+        Pool(bool)
+    }
+
+    #[derive(Debug)]
+    pub enum FormulaElements {
+        Synbol(Symbols),
+        Literal(LiteralTypes),
+        Variable(Var)
+    }
+
+    #[derive(Debug)]
     pub enum Expression {
-        Lit(Literal),
+        Lit(LiteralTypes),
         VarOrAttr(VarOrAttr),
-        Simbol(Symbols),
+        Formula(Vec<FormulaElements>),
         Module(String),
+        Function {
+            args:Vec<Var>,
+            block:Box<Statements>
+        },
         Ref {
             object:Box<Expression>,
             index:Box<Expression>
@@ -54,28 +75,6 @@ pub mod imd_lang_types {
         NotImplement
     }
 
-    impl Expression {
-        fn to_literal(&self) -> Literal {
-            unimplemented!();
-            Literal {
-                type_:"Error".to_string(),
-                value:"Error".to_string()
-            }
-        }
-    }
-
-    #[derive(Debug)]
-    pub struct Literal {
-        pub type_:String,
-        pub value:String
-    }
-
-    #[derive(Debug)]
-    pub enum HasLiteralAndEmpty {
-        Empty,
-        Lit(Literal)
-    }
-
     #[derive(Debug)]
     pub enum VarOrAttr {
         Variable(Var),
@@ -85,7 +84,7 @@ pub mod imd_lang_types {
     #[derive(Debug)]
     pub struct Var {
         pub varname:String,
-        pub value:HasLiteralAndEmpty
+        pub value:AttrKeyAndValue
     } 
 
     #[derive(Debug)]
@@ -111,7 +110,8 @@ pub mod imd_lang_types {
             right_hand_side:Expression
         },
         NameSpace {
-            block:Box<Statements>
+            block:Box<Statements>,
+            super_space:Option<String>
         },
         AddTmp(Expression),
         Return(Expression),
