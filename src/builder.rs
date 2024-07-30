@@ -4,7 +4,7 @@ pub mod builder{
 
     use crate::imd_lang_types::imd_lang_types;
     
-    pub fn generate_code(filename:&String) -> imd_lang_types::Statements {
+    pub fn generate_code(source_filename:&String, imd_filename:&String) -> imd_lang_types::Statements {
         let vec_code = str_code_to_vec(read_file(filename));
         println!("{:?}", vec_code);
         vec_code_to_imd_lang(vec_code)
@@ -71,7 +71,7 @@ pub mod builder{
                 imd_lang_code.push(imd_lang_types::Statement::Substitution{
                     left_hand_side: imd_lang_types::VarOrAttr::Variable(imd_lang_types::Var {
                         varname: row[0],
-                        value: imd_lang_types::HasLiteralAndEmpty::Empty
+                        value: imd_lang_types::AttrKeyAndValue::new()
                     }),
                     right_hand_side: parse_expression((&row[2..]).to_vec())
                 });
@@ -103,9 +103,7 @@ pub mod builder{
 
     fn parse_expression(vec_expression: Vec<String>) -> imd_lang_types::Expression {
         unimplemented!();
-        imd_lang_types::Expression {
-            symbol_and_values: vec![imd_lang_types::SymbolAndValues::NotImplement]
-        }
+        imd_lang_types::Expression::NotImplement
     }
 }
 
