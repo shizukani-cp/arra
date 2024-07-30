@@ -41,15 +41,22 @@ pub mod imd_lang_types {
     }
 
     #[derive(Debug)]
+    pub enum LiteralTypes {
+        Int(isize),
+        Str(String),
+        Pool(bool)
+    }
+
+    #[derive(Debug)]
     pub enum FormulaElements {
         Synbol(Symbols),
-        Literal(Literal),
+        Literal(LiteralTypes),
         Variable(Var)
     }
 
     #[derive(Debug)]
     pub enum Expression {
-        Lit(Literal),
+        Lit(LiteralTypes),
         VarOrAttr(VarOrAttr),
         Formula(Vec<FormulaElements>),
         Module(String),
@@ -66,11 +73,6 @@ pub mod imd_lang_types {
             args:Vec<Expression>
         },
         NotImplement
-    }
-
-    #[derive(Debug)]
-    pub struct Literal {
-        pub value:String
     }
 
     #[derive(Debug)]
