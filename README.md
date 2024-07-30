@@ -9,14 +9,13 @@ arra run imd_script.iar
 ```
 ## 制約を示すプログラムの例
 ### 最終行にはカンマが必須
-```Arra
+```Arra:test_and_examples/hello_world.arr
 standard,=,module,"standard",
 attr,standard,print,
 call,ref,tmp,1,"Hello, world!",
 ```
-※test_and_examples/hello_world.arr
 ### インデントの最初にカンマはつけない
-```Arra
+```Arra:test_and_examples/define_function.arr
 standard,=,module,"standard",
 my_func,=,function,
     attr,standard,print,
@@ -26,4 +25,3 @@ return_null_func,=,function,
     return,null,
 end,
 ```
-※test_and_examples/define_function.arr
