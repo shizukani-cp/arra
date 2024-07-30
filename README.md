@@ -1,7 +1,7 @@
 # Arra
 ## プロジェクトの概要
 自作言語（arra）の処理系（テスト用に自作言語のソースコードもあり）。  
-Rustで開発している。ただしstringやintなどの標準オブジェクトはarraで書くことも検討中。  
+Rustで開発している。StringやIntなどの基本オブジェクトはRustで実装するが、複合オブジェクトはarraで書くことも検討中。  
 ## 使い方
 ```sh
 arra build your_script.arr
