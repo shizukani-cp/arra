@@ -1,6 +1,9 @@
 pub mod imd_lang_types {
 
+    use std::collections::HashMap;
+
     pub type Statements = Vec<Statement>;
+    pub type AttrKeyAndValue = HashMap<String, String>;
 
     #[derive(Debug)]
     pub enum Symbols {
@@ -79,7 +82,7 @@ pub mod imd_lang_types {
     #[derive(Debug)]
     pub struct Var {
         pub varname:String,
-        pub value:Literal
+        pub value:AttrKeyAndValue
     } 
 
     #[derive(Debug)]
