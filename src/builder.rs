@@ -4,7 +4,7 @@ pub mod builder{
 
     use crate::imd_lang_types::imd_lang_types;
     
-    pub fn generate_code(filename:&String) -> imd_lang_types::Statements {
+    pub fn generate_code(source_filename:&String, imd_filename:&String) -> imd_lang_types::Statements {
         let vec_code = str_code_to_vec(read_file(filename));
         println!("{:?}", vec_code);
         vec_code_to_imd_lang(vec_code)
