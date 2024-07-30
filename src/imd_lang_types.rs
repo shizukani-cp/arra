@@ -33,29 +33,25 @@ pub mod imd_lang_types {
                 Symbols::Small => "lt",
                 Symbols::EqualOrSmall => "le",
                 Symbols::EqualOrBig => "ge"
-            }
+            }.to_string()
         }
     }
 
     #[derive(Debug)]
-    pub enum SymbolAndValues {
+    pub enum Expression {
         Lit(Literal),
-        Variable(Var),
+        VarOrAttr(VarOrAttr),
         Simbol(Symbols),
-        Attr(Vec<String>),
+        Module(String),
         Ref {
-            object:Expression,
-            index:Expression
+            object:Box<Expression>,
+            index:Box<Expression>
         },
         Call {
-            func:Expression,
+            func:Box<Expression>,
             args:Vec<Expression>
-        }
-    }
-
-    #[derive(Debug)]
-    pub struct Expression {
-        symbol_and_values:Vec<SymbolAndValues>
+        },
+        NotImplement
     }
 
     impl Expression {
@@ -70,8 +66,8 @@ pub mod imd_lang_types {
 
     #[derive(Debug)]
     pub struct Literal {
-        type_:String,
-        value:String
+        pub type_:String,
+        pub value:String
     }
 
     #[derive(Debug)]
@@ -81,15 +77,21 @@ pub mod imd_lang_types {
     }
 
     #[derive(Debug)]
-    pub struct Var {
-        varname:String,
-        value:HasLiteralAndEmpty
+    pub enum VarOrAttr {
+        Variable(Var),
+        Attr(Vec<String>)
     }
 
     #[derive(Debug)]
+    pub struct Var {
+        pub varname:String,
+        pub value:HasLiteralAndEmpty
+    } 
+
+    #[derive(Debug)]
     pub struct Case {
-        condition:Expression,
-        block:Box<Statements>
+        pub condition:Expression,
+        pub block:Box<Statements>
     }
 
     #[derive(Debug)]
@@ -105,13 +107,15 @@ pub mod imd_lang_types {
             block:Box<Statements>
         },
         Substitution {
-            var:Var,
+            left_hand_side:VarOrAttr,
             right_hand_side:Expression
         },
         NameSpace {
             block:Box<Statements>
         },
+        AddTmp(Expression),
         Return(Expression),
+        Export(Var),
         Break,
         Continue,
         NotImplement
