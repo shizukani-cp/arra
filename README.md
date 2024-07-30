@@ -4,8 +4,8 @@
 Rustで開発している。StringやIntなどの基本オブジェクトはRustで実装するが、複合オブジェクトはarraで書くことも検討中。  
 ## 使い方
 ```sh
-arra build your_script.arr
-arra run your_script.arr
+arra build your_script.arr imd_script.iar
+arra run imd_script.iar
 ```
 ## 制約を示すプログラムの例
 ### 最終行にはカンマが必須
