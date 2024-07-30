@@ -1,6 +1,9 @@
 pub mod imd_lang_types {
 
+    use std::collections::HashMap;
+
     pub type Statements = Vec<Statement>;
+    pub type AttrKeyAndValue = HashMap<String, String>;
 
     #[derive(Debug)]
     pub enum Symbols {
@@ -33,63 +36,61 @@ pub mod imd_lang_types {
                 Symbols::Small => "lt",
                 Symbols::EqualOrSmall => "le",
                 Symbols::EqualOrBig => "ge"
-            }
+            }.to_string()
         }
     }
 
     #[derive(Debug)]
-    pub enum SymbolAndValues {
-        Lit(Literal),
-        Variable(Var),
-        Simbol(Symbols),
-        Attr(Vec<String>),
+    pub enum LiteralTypes {
+        Int(isize),
+        Str(String),
+        Pool(bool)
+    }
+
+    #[derive(Debug)]
+    pub enum FormulaElements {
+        Synbol(Symbols),
+        Literal(LiteralTypes),
+        Variable(Var)
+    }
+
+    #[derive(Debug)]
+    pub enum Expression {
+        Lit(LiteralTypes),
+        VarOrAttr(VarOrAttr),
+        Formula(Vec<FormulaElements>),
+        Module(String),
+        Function {
+            args:Vec<Var>,
+            block:Box<Statements>
+        },
         Ref {
-            object:Expression,
-            index:Expression
+            object:Box<Expression>,
+            index:Box<Expression>
         },
         Call {
-            func:Expression,
+            func:Box<Expression>,
             args:Vec<Expression>
-        }
+        },
+        NotImplement
     }
 
     #[derive(Debug)]
-    pub struct Expression {
-        symbol_and_values:Vec<SymbolAndValues>
-    }
-
-    impl Expression {
-        fn to_literal(&self) -> Literal {
-            unimplemented!();
-            Literal {
-                type_:"Error".to_string(),
-                value:"Error".to_string()
-            }
-        }
-    }
-
-    #[derive(Debug)]
-    pub struct Literal {
-        type_:String,
-        value:String
-    }
-
-    #[derive(Debug)]
-    pub enum HasLiteralAndEmpty {
-        Empty,
-        Lit(Literal)
+    pub enum VarOrAttr {
+        Variable(Var),
+        Attr(Vec<String>)
     }
 
     #[derive(Debug)]
     pub struct Var {
-        varname:String,
-        value:HasLiteralAndEmpty
-    }
+        pub varname:String,
+        pub value:AttrKeyAndValue
+    } 
 
     #[derive(Debug)]
     pub struct Case {
-        condition:Expression,
-        block:Box<Statements>
+        pub condition:Expression,
+        pub block:Box<Statements>
     }
 
     #[derive(Debug)]
@@ -105,13 +106,16 @@ pub mod imd_lang_types {
             block:Box<Statements>
         },
         Substitution {
-            var:Var,
+            left_hand_side:VarOrAttr,
             right_hand_side:Expression
         },
         NameSpace {
-            block:Box<Statements>
+            block:Box<Statements>,
+            super_space:Option<String>
         },
+        AddTmp(Expression),
         Return(Expression),
+        Export(Var),
         Break,
         Continue,
         NotImplement

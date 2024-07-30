@@ -7,8 +7,9 @@ use std::env;
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args[1] == "build".to_string(){
-        let filename = &args[2];
-        println!("{:?}", generate_code(&filename));
+        let source_filename = &args[2];
+        let imd_filename = &args[3];
+        println!("{:?}", generate_code(&filename, &imd_filename));
     } else if args[1] == "run".to_string(){
         unimplemented!()
     } else {
