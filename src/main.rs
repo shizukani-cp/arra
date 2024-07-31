@@ -9,7 +9,7 @@ fn main() {
     if args[1] == "build".to_string(){
         let source_filename = &args[2];
         let imd_filename = &args[3];
-        println!("{:?}", generate_code(&filename, &imd_filename));
+        println!("{:?}", generate_code(&source_filename, &imd_filename));
     } else if args[1] == "run".to_string(){
         unimplemented!()
     } else {
