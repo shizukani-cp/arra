@@ -95,15 +95,9 @@ pub mod imd_lang_types {
 
     #[derive(Debug)]
     pub enum Statement {
-        Call{
+        Call {
             func:Expression,
             args:Vec<Expression>
-        },
-        Switch {
-            cases:Vec<Case>
-        },
-        Loop {
-            block:Box<Statements>
         },
         Substitution {
             left_hand_side:VarOrAttr,
@@ -113,6 +107,8 @@ pub mod imd_lang_types {
             block:Box<Statements>,
             super_space:Option<String>
         },
+        Switch(Vec<Case>),
+        Loop(Box<Statements>),
         Return(Expression),
         Export(Var),
         Break,
