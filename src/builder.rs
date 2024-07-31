@@ -3,6 +3,7 @@ pub mod builder{
     use std::io::prelude::*;
 
     use crate::imd_lang_types::imd_lang_types;
+    use super::syntax_error;
     
     pub fn generate_code(source_filename:&String, imd_filename:&String) -> imd_lang_types::Statements {
         let vec_code = str_code_to_vec(read_file(source_filename));
@@ -67,7 +68,7 @@ pub mod builder{
         let imd_lang_code: imd_lang_types::Statements = vec![];
         let iter_code = veccode.iter();
         while let Some(row) = iter_code.next() {
-            if ref_cell(row, 1) == "=".to_string() {
+            if ref_cell(row, 1) == "=".to_string() {  // 変数に代入する場合
                 imd_lang_code.push(imd_lang_types::Statement::Substitution{
                     left_hand_side: imd_lang_types::VarOrAttr::Variable(imd_lang_types::Var {
                         varname: row[0],
@@ -75,7 +76,7 @@ pub mod builder{
                     }),
                     right_hand_side: parse_expression((&row[2..]).to_vec())
                 });
-            } else if ref_cell(row, 0) == "attr".to_string() {
+            } else if ref_cell(row, 0) == "attr".to_string() {  // 属性に代入する場合
                 if let Some(index) = row.iter().position(|s| *s == "=".to_string()) {
                     imd_lang_code.push(imd_lang_types::Statement::Substitution {
                         left_hand_side: imd_lang_types::VarOrAttr::Attr((&row[..index]).to_vec()),
