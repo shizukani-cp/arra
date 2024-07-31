@@ -11,3 +11,7 @@ file,=,namespace,
     write,=,function,self,content,
     end,
 end,
+
+error,=,function,message,
+    rustcall,"error"
+end,
