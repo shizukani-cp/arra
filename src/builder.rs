@@ -82,17 +82,13 @@ pub mod builder{
                         right_hand_side: parse_expression((&row[(index + 2)..]).to_vec())
                     })
                 } else {
-                    print_error("Invaild syntax")
+                    syntax_error::invaild_syntax_error();
                 }
             } else {
-                print_error("Invaild syntax.");
+                syntax_error::invaild_syntax_error();
             }
         }
         imd_lang_code
-    }
-
-    fn print_error(message: &str) {
-        panic!("{}", message)
     }
 
     fn ref_cell(row: &Vec<String>, col: usize) -> String{
@@ -105,6 +101,17 @@ pub mod builder{
     fn parse_expression(vec_expression: Vec<String>) -> imd_lang_types::Expression {
         unimplemented!();
         imd_lang_types::Expression::NotImplement
+    }
+}
+
+mod syntax_error {
+    
+    pub fn invaild_syntax_error() {
+        print_error("Invaild syntax");
+    }
+
+    fn print_error(message: &str) {
+        panic!("{}", message);
     }
 }
 
