@@ -113,7 +113,6 @@ pub mod imd_lang_types {
             block:Box<Statements>,
             super_space:Option<String>
         },
-        AddTmp(Expression),
         Return(Expression),
         Export(Var),
         Break,
