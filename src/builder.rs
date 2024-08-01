@@ -3,7 +3,7 @@ pub mod builder{
     use std::io::prelude::*;
 
     use crate::imd_lang_types::imd_lang_types;
-    use super::syntax_error;
+    use parser::vec_code_to_imd_lang;
     
     pub fn generate_code(source_filename:&String, imd_filename:&String) -> imd_lang_types::Statements {
         let vec_code = str_code_to_vec(read_file(source_filename));
@@ -63,59 +63,66 @@ pub mod builder{
         }
         code
     }
-    pub fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> imd_lang_types::Statements {
-        unimplemented!();
-        let imd_lang_code: imd_lang_types::Statements = vec![];
-        let iter_code = veccode.iter();
-        while let Some(row) = iter_code.next() {
-            if ref_cell(row, 1) == "=".to_string() {  // 変数に代入する場合
-                imd_lang_code.push(imd_lang_types::Statement::Substitution{
-                    left_hand_side: imd_lang_types::VarOrAttr::Variable(imd_lang_types::Var {
-                        varname: row[0],
-                        value: imd_lang_types::AttrKeyAndValue::new()
-                    }),
-                    right_hand_side: parse_expression((&row[2..]).to_vec())
-                });
-            } else if ref_cell(row, 0) == "attr".to_string() {  // 属性に代入する場合
-                if let Some(index) = row.iter().position(|s| *s == "=".to_string()) {
-                    imd_lang_code.push(imd_lang_types::Statement::Substitution {
-                        left_hand_side: imd_lang_types::VarOrAttr::Attr((&row[..index]).to_vec()),
-                        right_hand_side: parse_expression((&row[(index + 2)..]).to_vec())
-                    })
+
+    pub mod parser{
+        
+        use crate::imd_lang_types::imd_lang_types;
+        use super::super::syntax_error;
+
+        pub fn vec_code_to_imd_lang(veccode:Vec<Vec<String>>) -> imd_lang_types::Statements {
+            unimplemented!();
+            let imd_lang_code: imd_lang_types::Statements = vec![];
+            let iter_code = veccode.iter();
+            while let Some(row) = iter_code.next() {
+                if ref_cell(row, 1) == "=".to_string() {  // 変数に代入する場合
+                    imd_lang_code.push(imd_lang_types::Statement::Substitution{
+                        left_hand_side: imd_lang_types::VarOrAttr::Variable(imd_lang_types::Var {
+                            varname: row[0],
+                            value: imd_lang_types::AttrKeyAndValue::new()
+                        }),
+                        right_hand_side: parse_expression((&row[2..]).to_vec())
+                    });
+                } else if ref_cell(row, 0) == "attr".to_string() {  // 属性に代入する場合
+                    if let Some(index) = row.iter().position(|s| *s == "=".to_string()) {
+                        imd_lang_code.push(imd_lang_types::Statement::Substitution {
+                            left_hand_side: imd_lang_types::VarOrAttr::Attr((&row[..index]).to_vec()),
+                            right_hand_side: parse_expression((&row[(index + 2)..]).to_vec())
+                        })
+                    } else {
+                        syntax_error::invaild_syntax_error();
+                    }
+                } else if ref_cell(row, 0) == "call".to_string() {
+                    if ref_cell(row, 1) == "ref".to_string() {  //refを使用したcallの場合
+                        imd_lang_code.push(imd_lang_types::Statement::Call {
+                            func:parse_expression(vec![ref_cell(row, 1), ref_cell(row, 2)]),
+                            args: if row.len() > 3 {vec![]} else {vec![parse_expression(row[3..].to_vec())]}
+                        });
+                    } else if ref_cell(row, 1) == "attr".to_string() {  //attrが入っていたらエラー
+                        syntax_error::invaild_syntax_error();
+                    } else {  //普通のcallの場合
+                        imd_lang_code.push(imd_lang_types::Statement::Call {
+                            func:parse_expression(vec![ref_cell(row, 1)]),
+                            args: if row.len() > 2 {vec![]} else {vec![parse_expression(row[2..].to_vec())]}
+                        });
+                    }
                 } else {
                     syntax_error::invaild_syntax_error();
                 }
-            } else if ref_cell(row, 0) == "call".to_string() {
-                if ref_cell(row, 1) == "ref".to_string() {  //refを使用したcallの場合
-                    imd_lang_code.push(imd_lang_types::Statement::Call {
-                        func:parse_expression(vec![ref_cell(row, 1), ref_cell(row, 2)]),
-                        args: if row.len() > 3 {vec![]} else {vec![parse_expression(row[3..].to_vec())]}
-                    });
-                } else if ref_cell(row, 1) == "attr".to_string() {  //attrが入っていたらエラー
-                    syntax_error::invaild_syntax_error();
-                } else {  //普通のcallの場合
-                    imd_lang_code.push(imd_lang_types::Statement::Call {
-                        func:parse_expression(vec![ref_cell(row, 1)]),
-                        args: if row.len() > 2 {vec![]} else {vec![parse_expression(row[2..].to_vec())]}
-                    });
-                }
-            } else {
-                syntax_error::invaild_syntax_error();
             }
+            imd_lang_code
         }
-        imd_lang_code
-    }
 
-    fn ref_cell(row: &Vec<String>, col: usize) -> String{
-        if row.len() <= col {
-            return "".to_string();
+        fn ref_cell(row: &Vec<String>, col: usize) -> String{
+            if row.len() <= col {
+                return "".to_string();
+            }
+            row.as_slice()[col].clone()
         }
-        row.as_slice()[col].clone()
-    }
 
-    fn parse_expression(vec_expression: Vec<String>) -> imd_lang_types::Expression {
-        unimplemented!();
-        imd_lang_types::Expression::NotImplement
+        pub fn parse_expression(vec_expression: Vec<String>) -> imd_lang_types::Expression {
+            unimplemented!();
+            imd_lang_types::Expression::NotImplement
+        }
     }
 }
 
@@ -132,7 +139,7 @@ mod syntax_error {
 
 #[cfg(test)]
 mod tests {
-    use crate::builder::builder;
+    use crate::builder::builder::{parser};
 
     fn testing_str_code_to_vec(s: &str, v: Vec<Vec<&str>>) {
         let mut vcode: Vec<Vec<String>> = vec![];
@@ -143,7 +150,7 @@ mod tests {
             }
             vcode.push(row);
         }
-        assert_eq!(builder::str_code_to_vec(s.to_string()), vcode)
+        assert_eq!(parser::str_code_to_vec(s.to_string()), vcode)
     }
 
     #[test]
