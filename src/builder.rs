@@ -85,6 +85,20 @@ pub mod builder{
                 } else {
                     syntax_error::invaild_syntax_error();
                 }
+            } else if ref_cell(row, 0) == "call".to_string() {
+                if ref_cell(row, 1) == "ref".to_string() {  //refを使用したcallの場合
+                    imd_lang_code.push(imd_lang_types::Statement::Call {
+                        func:parse_expression(vec![ref_cell(row, 1), ref_cell(row, 2)]),
+                        args: if row.len() > 3 {vec![]} else {vec![parse_expression(row[3..].to_vec())]}
+                    });
+                } else if ref_cell(row, 1) == "attr".to_string() {  //attrが入っていたらエラー
+                    syntax_error::invaild_syntax_error();
+                } else {  //普通のcallの場合
+                    imd_lang_code.push(imd_lang_types::Statement::Call {
+                        func:parse_expression(vec![ref_cell(row, 1)]),
+                        args: if row.len() > 2 {vec![]} else {vec![parse_expression(row[2..].to_vec())]}
+                    });
+                }
             } else {
                 syntax_error::invaild_syntax_error();
             }
