@@ -111,6 +111,7 @@ pub mod imd_lang_types {
         Loop(Box<Statements>),
         Return(Expression),
         Export(Var),
+        Rustcall(String),
         Break,
         Continue,
         NotImplement
