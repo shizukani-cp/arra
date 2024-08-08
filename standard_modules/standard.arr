@@ -1,4 +1,8 @@
-print,=,function,args,file,
+print,=,function,s,
+   c_s,=,"write $STDOUT \"",
+   c_s,+=,s,
+   c_s,+=,"\"",
+   rustcall,c_s,
 end,
 
 file,=,namespace,
