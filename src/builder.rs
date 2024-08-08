@@ -105,6 +105,8 @@ pub mod builder{
                             args: if row.len() > 2 {vec![]} else {vec![parse_expression(row[2..].to_vec())]}
                         });
                     }
+                } else if ref_cell(row, 0) == "rustcall".to_string() { //rustcallの場合
+                    imd_lang_code.push(imd_lang_types::Statement::Rustcall(row[1]));
                 } else {
                     syntax_error::invaild_syntax_error();
                 }
