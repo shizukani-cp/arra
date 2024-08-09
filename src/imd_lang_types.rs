@@ -72,6 +72,7 @@ pub mod imd_lang_types {
             func:Box<Expression>,
             args:Vec<Expression>
         },
+        Null,
         NotImplement
     }
 
