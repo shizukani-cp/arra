@@ -106,7 +106,7 @@ pub mod builder{
                         });
                     }
                 } else if ref_cell(row, 0) == "rustcall".to_string() { //rustcallの場合
-                    imd_lang_code.push(imd_lang_types::Statement::Rustcall(row[1]));
+                    imd_lang_code.push(imd_lang_types::Statement::Rustcall(row[1].split_whitespace().map(str::to_string).collect()));
                 } else {
                     syntax_error::invaild_syntax_error();
                 }
