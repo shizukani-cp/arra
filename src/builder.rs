@@ -141,7 +141,7 @@ mod syntax_error {
 
 #[cfg(test)]
 mod tests {
-    use crate::builder::builder::{parser};
+    use crate::builder::builder::{str_code_to_vec, parser};
 
     fn testing_str_code_to_vec(s: &str, v: Vec<Vec<&str>>) {
         let mut vcode: Vec<Vec<String>> = vec![];
@@ -152,7 +152,7 @@ mod tests {
             }
             vcode.push(row);
         }
-        assert_eq!(parser::str_code_to_vec(s.to_string()), vcode)
+        assert_eq!(str_code_to_vec(s.to_string()), vcode)
     }
 
     #[test]
