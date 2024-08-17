@@ -41,7 +41,7 @@ pub mod imd_lang_types {
     }
 
     #[derive(Debug)]
-    pub enum LiteralTypes {
+    pub enum PrimitiveTypes {
         Int(isize),
         Str(String),
         Pool(bool)
@@ -50,13 +50,13 @@ pub mod imd_lang_types {
     #[derive(Debug)]
     pub enum FormulaElements {
         Synbol(Symbols),
-        Literal(LiteralTypes),
+        Literal(PrimitiveTypes),
         Variable(Var)
     }
 
     #[derive(Debug)]
     pub enum Expression {
-        Lit(LiteralTypes),
+        Lit(PrimitiveTypes),
         VarOrAttr(VarOrAttr),
         Formula(Vec<FormulaElements>),
         Module(String),
